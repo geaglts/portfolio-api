@@ -1,8 +1,8 @@
 {
   "name": "portfolio-api",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "Geaglts portfolio",
+  "author": "Miguel Angel Toledo Santiago <geaglts@gmail.com>",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
@@ -72,5 +72,11 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
+  },
+  "engines": {
+    "node": ">=18.10.0",
+    "pnpm": ">=7.25.0",
+    "yarn": ">=1.0.0",
+    "npm": ">=9.1.2"
   }
 }
