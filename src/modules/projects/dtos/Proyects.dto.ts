@@ -1,6 +1,13 @@
-import { IsString, IsNotEmpty, IsLowercase } from 'class-validator';
+import { PartialType } from '@nestjs/swagger';
+import {
+  IsString,
+  IsNotEmpty,
+  IsLowercase,
+  IsBoolean,
+  IsArray,
+} from 'class-validator';
 
-export class CrateProjectDto {
+export class CreateProjectDto {
   @IsString()
   @IsNotEmpty()
   @IsLowercase()
@@ -12,11 +19,21 @@ export class CrateProjectDto {
 
   @IsString()
   @IsNotEmpty()
-  @IsLowercase()
   title: string;
 
   @IsString()
   @IsNotEmpty()
   @IsLowercase()
   description: string;
+
+  @IsBoolean()
+  top: boolean;
 }
+
+export class DeleteManyProjectDto {
+  @IsArray()
+  @IsString({ each: true })
+  projectIds: string[];
+}
+
+export class UpdateProjectDto extends PartialType(CreateProjectDto) {}
