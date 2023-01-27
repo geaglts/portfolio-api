@@ -1,5 +1,5 @@
 import { PartialType } from '@nestjs/swagger';
-import { IsString, IsNotEmpty, IsUrl, IsLowercase } from 'class-validator';
+import { IsString, IsNotEmpty, IsUrl, IsLowercase, IsOptional } from 'class-validator';
 
 export class CreateTechnologyDto {
   @IsNotEmpty()
@@ -12,9 +12,11 @@ export class CreateTechnologyDto {
   @IsLowercase()
   extension: string;
 
+  @IsOptional()
   @IsString()
   documentationUrl: string;
 
+  @IsOptional()
   @IsUrl()
   iconUrl: string;
 }
