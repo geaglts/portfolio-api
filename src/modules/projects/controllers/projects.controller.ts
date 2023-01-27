@@ -10,10 +10,12 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
-import { ApiKeyGuard } from 'src/modules/auth/guards/api-key.guard';
-import { Public } from 'src/modules/auth/decorators/public.decorator';
+import { ApiKeyGuard } from '../../auth/guards/api-key.guard';
+import { Public } from '../../auth/decorators/public.decorator';
 
 import { ProjectsService } from '../services/projects.service';
+
+import { MongoIdPipe } from '../../../common/mongo-id.pipe';
 
 import {
   CreateProjectDto,
@@ -34,7 +36,7 @@ export class ProjectsController {
   }
 
   @Get('/:id')
-  getOne(@Param('id') id: string) {
+  getOne(@Param('id', MongoIdPipe) id: string) {
     return this.projectService.getOne(id);
   }
 
@@ -44,17 +46,17 @@ export class ProjectsController {
   }
 
   @Put('/:id')
-  updateOne(@Param('id') id: string, @Body() body: UpdateProjectDto) {
+  updateOne(@Param('id', MongoIdPipe) id: string, @Body() body: UpdateProjectDto) {
     return this.projectService.updateOne(id, body);
   }
 
   @Delete('/many')
   deleteMany(@Body() body: DeleteManyProjectDto) {
-    return this.projectService.deleteManys(body.projectIds);
+    return this.projectService.deleteMany(body.projectIds);
   }
 
   @Delete('/:id')
-  deleteOne(@Param('id') id: string) {
+  deleteOne(@Param('id', MongoIdPipe) id: string) {
     return this.projectService.deleteOne(id);
   }
 }

@@ -5,6 +5,7 @@ import {
   IsLowercase,
   IsBoolean,
   IsArray,
+  IsMongoId,
 } from 'class-validator';
 
 export class CreateProjectDto {
@@ -32,7 +33,7 @@ export class CreateProjectDto {
 
 export class DeleteManyProjectDto {
   @IsArray()
-  @IsString({ each: true })
+  @IsMongoId({ each: true })
   projectIds: string[];
 }
 

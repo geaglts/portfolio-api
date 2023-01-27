@@ -33,7 +33,7 @@ export class ProjectsService {
       if (modifiedCount === 0) throw new Error();
       return { body: 'Actualizado correctamente' };
     } catch {
-      throw new BadRequestException('Por favor verifica tus datos');
+      throw new BadRequestException('Este proyecto no fue encontrado');
     }
   }
 
@@ -51,9 +51,9 @@ export class ProjectsService {
     }
   }
 
-  async deleteManys(projectIds: string[]) {
+  async deleteMany(projectIds: string[]) {
     const response = await this.projectModel.deleteMany({
-      id: { $in: projectIds },
+      _id: { $in: projectIds },
     });
     return { deleted: response.deletedCount };
   }
