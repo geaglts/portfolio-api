@@ -4,7 +4,10 @@ import { Model } from 'mongoose';
 
 import { ProjectEntity } from '../entities/Project.entity';
 
+import { PaginationDto } from 'src/modules/dtos/Pagination.dto';
 import { CreateProjectDto, UpdateProjectDto } from '../dtos/Proyects.dto';
+
+import { getPagination } from '../../../utils/getPagination';
 
 @Injectable()
 export class ProjectsService {
@@ -13,9 +16,18 @@ export class ProjectsService {
     private projectModel: Model<ProjectEntity>,
   ) {}
 
-  async getAll() {
-    const projects = await this.projectModel.find().exec();
-    return projects;
+  async getAll(params: PaginationDto) {
+    const { limit, offset, page } = getPagination(params);
+    const projectsCount = await this.projectModel.countDocuments();
+    const pages = Math.ceil(projectsCount / limit);
+    const pagination = { pages, page, limit };
+    if (page > pages) return { pagination, projects: [] };
+    const projects = await this.projectModel
+      .find()
+      .skip(offset)
+      .limit(limit)
+      .sort({ title: 1 });
+    return { pagination, projects };
   }
 
   async getOne(id: string) {

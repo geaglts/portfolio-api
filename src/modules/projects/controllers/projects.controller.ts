@@ -6,6 +6,7 @@ import {
   UseGuards,
   Delete,
   Param,
+  Query,
   Put,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
@@ -17,6 +18,7 @@ import { ProjectsService } from '../services/projects.service';
 
 import { MongoIdPipe } from '../../../common/mongo-id.pipe';
 
+import { PaginationDto } from '../../dtos/Pagination.dto';
 import {
   CreateProjectDto,
   DeleteManyProjectDto,
@@ -31,8 +33,8 @@ export class ProjectsController {
 
   @Public()
   @Get('/all')
-  getAll() {
-    return this.projectService.getAll();
+  getAll(@Query() queries: PaginationDto) {
+    return this.projectService.getAll(queries);
   }
 
   @Get('/:id')
