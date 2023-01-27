@@ -6,6 +6,7 @@ import {
   UseGuards,
   Delete,
   Param,
+  Put,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
@@ -14,7 +15,11 @@ import { Public } from 'src/modules/auth/decorators/public.decorator';
 
 import { ProjectsService } from '../services/projects.service';
 
-import { CreateProjectDto, DeleteManyProjectDto } from '../dtos/Proyects.dto';
+import {
+  CreateProjectDto,
+  DeleteManyProjectDto,
+  UpdateProjectDto,
+} from '../dtos/Proyects.dto';
 
 @UseGuards(ApiKeyGuard)
 @ApiTags('Projects')
@@ -28,9 +33,19 @@ export class ProjectsController {
     return this.projectService.getAll();
   }
 
+  @Get('/:id')
+  getOne(@Param('id') id: string) {
+    return this.projectService.getOne(id);
+  }
+
   @Post()
-  create(@Body() body: CreateProjectDto) {
+  createOne(@Body() body: CreateProjectDto) {
     return this.projectService.createOne(body);
+  }
+
+  @Put('/:id')
+  updateOne(@Param('id') id: string, @Body() body: UpdateProjectDto) {
+    return this.projectService.updateOne(id, body);
   }
 
   @Delete('/many')

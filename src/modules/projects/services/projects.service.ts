@@ -1,10 +1,14 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
 import { ProjectEntity } from '../entities/project.entity';
 
-import { CreateProjectDto } from '../dtos/Proyects.dto';
+import { CreateProjectDto, UpdateProjectDto } from '../dtos/Proyects.dto';
 
 @Injectable()
 export class ProjectsService {
@@ -16,6 +20,25 @@ export class ProjectsService {
   async getAll() {
     const projects = await this.projectModel.find().exec();
     return projects;
+  }
+
+  async getOne(id: string) {
+    const project = await this.projectModel.findById(id);
+    if (!project) {
+      throw new NotFoundException('Este proyecto no fue encontrado');
+    }
+    return project;
+  }
+
+  async updateOne(_id: string, data: UpdateProjectDto) {
+    try {
+      const updatedProject = await this.projectModel.updateOne({ _id }, data);
+      const { modifiedCount } = updatedProject;
+      if (modifiedCount === 0) throw new Error();
+      return { body: 'Actualizado correctamente' };
+    } catch {
+      throw new BadRequestException('Por favor verifica tus datos');
+    }
   }
 
   async createOne(data: CreateProjectDto) {
