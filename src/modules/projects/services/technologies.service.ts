@@ -22,7 +22,11 @@ export class TechnologiesService {
     const pages = Math.ceil(technologiesCount / limit);
     const pagination = { pages, page, limit };
     if (page > pages) return { pagination, technologies: [] };
-    const technologies = await this.technologyService.find().skip(offset).limit(limit);
+    const technologies = await this.technologyService
+      .find()
+      .skip(offset)
+      .limit(limit)
+      .sort({ name: 1 });
     return { pagination, technologies };
   }
 

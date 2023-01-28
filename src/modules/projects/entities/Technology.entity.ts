@@ -3,10 +3,10 @@ import { Document } from 'mongoose';
 
 @Schema({ collection: 'technologies', timestamps: true })
 export class TechnologyEntity extends Document {
-  @Prop({ lowercase: true, required: true })
+  @Prop({ required: true })
   name: string;
 
-  @Prop({ lowercase: true })
+  @Prop({ lowercase: true, default: '' })
   extension: string;
 
   @Prop({ default: '' })

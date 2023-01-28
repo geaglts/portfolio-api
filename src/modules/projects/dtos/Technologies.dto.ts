@@ -3,11 +3,10 @@ import { IsString, IsNotEmpty, IsUrl, IsLowercase, IsOptional } from 'class-vali
 
 export class CreateTechnologyDto {
   @IsNotEmpty()
-  @IsLowercase()
   @IsString()
   name: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   @IsLowercase()
   extension: string;
