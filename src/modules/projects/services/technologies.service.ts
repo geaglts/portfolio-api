@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 
@@ -7,7 +7,7 @@ import { TechnologyEntity } from '../entities/Technology.entity';
 import { getPagination } from '../../../utils/getPagination';
 
 import { PaginationDto } from '../../dtos/Pagination.dto';
-import { CreateTechnologyDto } from '../dtos/Technologies.dto';
+import { CreateTechnologyDto, UpdateTechnologyDto } from '../dtos/Technologies.dto';
 
 @Injectable()
 export class TechnologiesService {
@@ -30,8 +30,34 @@ export class TechnologiesService {
     return { pagination, technologies };
   }
 
+  async getOne(id: string) {
+    const technology = await this.technologyService.findById(id);
+    if (!technology) throw new NotFoundException('No encontrado');
+    return technology;
+  }
+
   async createOne(data: CreateTechnologyDto) {
-    const newTechnologie = new this.technologyService(data);
-    return newTechnologie.save();
+    const newTechnology = new this.technologyService(data);
+    return newTechnology.save();
+  }
+
+  async updateOne(id: string, data: UpdateTechnologyDto) {
+    try {
+      const updatedTechnology = await this.technologyService.findByIdAndUpdate(id, data, {
+        new: true,
+      });
+      return { message: 'Actualizado correctamente', body: updatedTechnology };
+    } catch (error) {
+      throw new BadRequestException('Verifica tu información');
+    }
+  }
+
+  async removeOne(id: string) {
+    try {
+      await this.technologyService.findByIdAndDelete(id);
+      return { message: 'Eliminado correctamente', body: id };
+    } catch (error) {
+      throw new BadRequestException('Verifica tu información');
+    }
   }
 }
