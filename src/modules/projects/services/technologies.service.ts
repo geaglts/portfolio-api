@@ -37,8 +37,13 @@ export class TechnologiesService {
   }
 
   async createOne(data: CreateTechnologyDto) {
-    const newTechnology = new this.technologyService(data);
-    return newTechnology.save();
+    try {
+      const newTechnology = new this.technologyService(data);
+      const savedTechnology = await newTechnology.save();
+      return savedTechnology;
+    } catch (error) {
+      throw new BadRequestException(error.message);
+    }
   }
 
   async updateOne(id: string, data: UpdateTechnologyDto) {
