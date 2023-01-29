@@ -52,12 +52,17 @@ export class TechnologiesService {
     }
   }
 
-  async removeOne(id: string) {
+  async deleteOne(id: string) {
     try {
       await this.technologyService.findByIdAndDelete(id);
       return { message: 'Eliminado correctamente', body: id };
     } catch (error) {
       throw new BadRequestException('Verifica tu información');
     }
+  }
+
+  async deleteMany(ids: string[]) {
+    const response = await this.technologyService.deleteMany({ _id: { $in: ids } });
+    return { message: 'Eliminados correctamente', body: response.deletedCount };
   }
 }

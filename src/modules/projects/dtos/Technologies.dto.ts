@@ -1,5 +1,13 @@
 import { PartialType } from '@nestjs/swagger';
-import { IsString, IsNotEmpty, IsUrl, IsLowercase, IsOptional } from 'class-validator';
+import {
+  IsString,
+  IsNotEmpty,
+  IsUrl,
+  IsLowercase,
+  IsOptional,
+  IsArray,
+  IsMongoId,
+} from 'class-validator';
 
 export class CreateTechnologyDto {
   @IsNotEmpty()
@@ -18,6 +26,12 @@ export class CreateTechnologyDto {
   @IsOptional()
   @IsUrl()
   iconUrl: string;
+}
+
+export class DeleteManyTechnologiesDto {
+  @IsArray()
+  @IsMongoId({ each: true })
+  technologyIds: string[];
 }
 
 export class UpdateTechnologyDto extends PartialType(CreateTechnologyDto) {}

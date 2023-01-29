@@ -37,6 +37,7 @@ export class ProjectsController {
     return this.projectService.getAll(queries);
   }
 
+  @Public()
   @Get('/:id')
   getOne(@Param('id', MongoIdPipe) id: string) {
     return this.projectService.getOne(id);
