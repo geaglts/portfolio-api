@@ -23,6 +23,7 @@ import {
   CreateProjectDto,
   DeleteManyProjectDto,
   UpdateProjectDto,
+  UpdateTechnologies,
 } from '../dtos/Proyects.dto';
 
 @UseGuards(ApiKeyGuard)
@@ -51,6 +52,14 @@ export class ProjectsController {
   @Put('/:id')
   updateOne(@Param('id', MongoIdPipe) id: string, @Body() body: UpdateProjectDto) {
     return this.projectService.updateOne(id, body);
+  }
+
+  @Put('/:id/technologies')
+  updateTechnologies(
+    @Param('id', MongoIdPipe) id: string,
+    @Body() body: UpdateTechnologies,
+  ) {
+    return this.projectService.updateTechnologies(id, body);
   }
 
   @Delete('/many')

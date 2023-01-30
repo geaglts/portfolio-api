@@ -41,6 +41,12 @@ export class DeleteManyProjectDto {
   projectIds: string[];
 }
 
+export class UpdateTechnologies {
+  @IsArray()
+  @IsMongoId({ each: true })
+  technologies: string[];
+}
+
 export class UpdateProjectDto extends PartialType(
   OmitType(CreateProjectDto, ['technologies']),
 ) {}
