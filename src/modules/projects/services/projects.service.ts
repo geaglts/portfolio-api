@@ -26,12 +26,19 @@ export class ProjectsService {
       .find()
       .skip(offset)
       .limit(limit)
+      .populate([
+        { path: 'technologies', select: '_id name extension documentationUrl iconUrl' },
+      ])
       .sort({ title: 1 });
     return { pagination, projects };
   }
 
   async getOne(id: string) {
-    const project = await this.projectModel.findById(id);
+    const project = await this.projectModel
+      .findById(id)
+      .populate([
+        { path: 'technologies', select: '_id name extension documentationUrl iconUrl' },
+      ]);
     if (!project) {
       throw new NotFoundException('Este proyecto no fue encontrado');
     }
@@ -56,9 +63,10 @@ export class ProjectsService {
 
   async deleteOne(projectId: string) {
     try {
-      const response = await this.projectModel.findByIdAndDelete(projectId);
-      return { deleted: response.id };
+      await this.projectModel.findByIdAndDelete(projectId);
+      return { message: 'Eliminado correctamente', deleted: projectId };
     } catch (error) {
+      console.log(error);
       throw new NotFoundException('Este proyecto no existe');
     }
   }

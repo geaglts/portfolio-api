@@ -1,4 +1,4 @@
-import { PartialType } from '@nestjs/swagger';
+import { OmitType, PartialType } from '@nestjs/swagger';
 import {
   IsString,
   IsNotEmpty,
@@ -29,6 +29,10 @@ export class CreateProjectDto {
 
   @IsBoolean()
   top: boolean;
+
+  @IsArray()
+  @IsMongoId({ each: true })
+  technologies: string[];
 }
 
 export class DeleteManyProjectDto {
@@ -37,4 +41,6 @@ export class DeleteManyProjectDto {
   projectIds: string[];
 }
 
-export class UpdateProjectDto extends PartialType(CreateProjectDto) {}
+export class UpdateProjectDto extends PartialType(
+  OmitType(CreateProjectDto, ['technologies']),
+) {}
