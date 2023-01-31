@@ -1,0 +1,29 @@
+# NODE
+node_modules
+npm-debug.log
+
+# BUILD
+dist
+
+# DOCKER
+Dockerfile
+mongo_data
+docker-compose.yml
+.dockerignore
+
+# IDE
+.vscode
+
+# CONFIGS
+.dev.env
+.env.example
+
+# LINT
+.eslintrc.js
+.prettierrc
+
+# GIT
+.git
+
+# OTHERS
+README.md
