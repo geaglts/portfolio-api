@@ -7,6 +7,7 @@ import {
   IsOptional,
   IsArray,
   IsMongoId,
+  IsHexColor,
 } from 'class-validator';
 
 export class CreateTechnologyDto {
@@ -26,6 +27,10 @@ export class CreateTechnologyDto {
   @IsOptional()
   @IsUrl()
   iconUrl: string;
+
+  @IsOptional()
+  @IsHexColor()
+  color: string;
 }
 
 export class DeleteManyTechnologiesDto {

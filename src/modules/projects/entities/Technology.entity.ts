@@ -14,6 +14,9 @@ export class TechnologyEntity extends Document {
 
   @Prop({ default: '' })
   iconUrl: string;
+
+  @Prop({ default: '#ffffff', lowercase: true })
+  color: string;
 }
 
 export const TechnologySchema = SchemaFactory.createForClass(TechnologyEntity);
