@@ -37,6 +37,11 @@ export class TechnologiesController {
     return this.technologyService.getAll(queries);
   }
 
+  @Get('/all/names')
+  getAllNames() {
+    return this.technologyService.getAllNames();
+  }
+
   @Public()
   @Get('/:id')
   getOne(@Param('id', MongoIdPipe) id: string) {

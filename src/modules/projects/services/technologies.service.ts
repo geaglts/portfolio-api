@@ -30,6 +30,11 @@ export class TechnologiesService {
     return { pagination, technologies };
   }
 
+  async getAllNames() {
+    const technologies = await this.technologyService.find().select('_id name color');
+    return technologies;
+  }
+
   async getOne(id: string) {
     const technology = await this.technologyService.findById(id);
     if (!technology) throw new NotFoundException('No encontrado');
