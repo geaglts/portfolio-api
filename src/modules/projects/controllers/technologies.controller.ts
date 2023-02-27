@@ -37,6 +37,7 @@ export class TechnologiesController {
     return this.technologyService.getAll(queries);
   }
 
+  @Public()
   @Get('/all/names')
   getAllNames() {
     return this.technologyService.getAllNames();
